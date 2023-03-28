@@ -43,5 +43,9 @@ ansible-playbook -i inventory/<your dynamic inventory script> site.yml
 - Add a second non-compliant submission where you would show us how you'd host this content in something other than a VM hosting a single file (e.g. containers or something cloud-native)
 - Consider if you should choose the insult generator one or not (we dare you) :)
 
-## Solution:
+## Solution with Test Evidence:
 Run `vagrant up --provision`
+![plot](./test-evidence/infrastructure-as-code1.png)
+![plot](./test-evidence/infrastructure-as-code2.png)
+![plot](./test-evidence/test-evidence1.png)
+![plot](./test-evidence/test-evidence2.png)
