@@ -1,0 +1,54 @@
+---
+- hosts: web
+  become: yes
+  roles:
+    - role: bertvv.httpd
+  tasks:
+    - name: copy cars website files
+      ansible.builtin.template:
+        src: ~/templates/car.html.j2
+        dest: /var/www/html/car.html
+        owner: bin
+        group: wheel
+        mode: '0755'
+      when: "'car' in inventory_hostname"
+
+    - name: copy snake website files
+      ansible.builtin.template:
+        src: ~/templates/snake.html.j2
+        dest: /var/www/html/snake.html
+        owner: bin
+        group: wheel
+        mode: '0755'
+      when: "'snake' in inventory_hostname"
+
+    - name: Make sure Apache is started now and at boot
+      service:
+        name: httpd
+        state: restarted
+        enabled: yes
+
+    - name: Verify installation
+      command: >
+        systemctl status httpd
+      register: httpd_install_status
+
+    - name: install chronyd
+      yum:
+        name: chrony
+        state: latest
+        update_cache: yes
+
+    - name: deploy chrony.conf template
+      template:
+        src: ~/templates/chrony.conf.j2
+        dest: /etc/chrony.conf
+        owner: root
+        group: root
+        mode: 0644
+        backup: yes
+
+    - name: Restart chronyd
+      service:
+        name: chronyd
+        state: restarted

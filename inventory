@@ -1,0 +1,10 @@
+[all:vars]
+ansible_user=vagrant
+ansible_port=22
+
+[control]
+ansible-control   ansible_host=10.10.10.10
+
+[web]
+webapp1-cars      ansible_host=10.10.10.100
+webapp2-snake     ansible_host=10.10.10.200
